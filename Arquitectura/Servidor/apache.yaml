@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apache
+  name: apache
+  namespace: chaos-testing
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - image: czdev/apache
+        name: apache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: client
+  name: client
+  namespace: chaos-testing
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+      - image: czdev/client
+        name: client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: apache
+  name: apache
+  namespace: chaos-testing
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: apache
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: error-injector
+  namespace: chaos-testing
+data:
+ nginx.conf: |-
+    events {}
+    http {
+        server {
+          listen 80;
+            location / {
+                return 500;
+            }
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: error-injector
+  namespace: chaos-testing
+  labels:
+    app: error-injector
+spec:
+  selector:
+    matchLabels:
+      app: error-injector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: error-injector
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: error-injector
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: error-injector
+  namespace: chaos-testing
+spec:
+  ports:
+  - name: service
+    port: 80
+  selector:
+    app: error-injector

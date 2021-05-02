@@ -1,0 +1,19 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-loss-example
+  namespace: chaos-testing
+spec:
+  action: loss
+  mode: one
+  selector:
+    namespaces:
+      - chaos-testing
+    labelSelectors:
+      'app': 'apache'
+  loss:
+    loss: "30"
+    correlation: "30"
+  duration: "30s"
+  scheduler:
+    cron: "@every 50s"

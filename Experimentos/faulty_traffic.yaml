@@ -1,0 +1,12 @@
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: error-split
+  namespace: chaos-testing
+spec:
+  service: apache
+  backends:
+  - service: apache
+    weight: 500m
+  - service: error-injector
+    weight: 500m

@@ -1,0 +1,86 @@
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: error-split
+  namespace: chaos-testing
+spec:
+  service: apache
+  backends:
+  - service: apache
+    weight: 500m
+  - service: error-injector
+    weight: 500m
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-failure-example
+  namespace: chaos-testing
+spec:
+  action: pod-failure
+  mode: one
+  value: ''
+  duration: '15s'
+  selector:
+    labelSelectors:
+      'app': 'apache'
+  scheduler:
+    cron: '@every 10s'
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-kill-demo
+  namespace: chaos-testing
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces:
+      - chaos-testing
+    labelSelectors:
+      'app': 'apache'
+  scheduler:
+    cron: '@every 3s'
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-loss-example
+  namespace: chaos-testing
+spec:
+  action: loss
+  mode: one
+  selector:
+    namespaces:
+      - chaos-testing
+    labelSelectors:
+      'app': 'apache'
+  loss:
+    loss: "30"
+    correlation: "30"
+  duration: "30s"
+  scheduler:
+    cron: "@every 50s"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-delay-example
+  namespace: chaos-testing
+spec:
+  action: delay
+  mode: one
+  selector:
+    namespaces:
+      - chaos-testing
+    labelSelectors:
+      'app': 'apache'
+  delay:
+    latency: "100ms"
+    correlation: "25"
+    jitter: "10ms"
+  duration: "15s"
+  scheduler:
+    cron: "@every 30s"
+---
