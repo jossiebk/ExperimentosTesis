@@ -18,7 +18,7 @@ spec:
         linkerd.io/inject: enabled
     spec:
       containers:
-      - image: czdev/apache
+      - image: jossie/apache
         name: apache
 ---
 apiVersion: apps/v1
@@ -41,7 +41,7 @@ spec:
         linkerd.io/inject: enabled
     spec:
       containers:
-      - image: czdev/client
+      - image: jossie/client
         name: client
 ---
 apiVersion: v1
