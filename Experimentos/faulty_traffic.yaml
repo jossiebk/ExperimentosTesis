@@ -7,6 +7,6 @@ spec:
   service: apache
   backends:
   - service: apache
-    weight: 500m
+    weight: 900m
   - service: error-injector
-    weight: 500m
+    weight: 100m
