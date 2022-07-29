@@ -36,19 +36,19 @@ La guia muestra como implementar Chaos Engineering en entornos Cloud Native de f
    ```
     -  Al inicializar se mostrara un grupo de opciones similar a la siguiente. 
   
-    ![Paso4.1](imagenes/Paso4.1.PNG)
+    ![Paso4.1](Imagenes/Paso4.1.png)
 
     - Se abrira una ventana en el navegador en caso aplique donde pedira seleccionar una cuenta con la cual continuar.
   
-    ![Paso4.2](imagenes/Paso4.2.PNG)
+    ![Paso4.2](Imagenes/Paso4.2.PNG)
 
      - Permitimos el acceso y se mostrara una ventana en la cual confirma que hemos podido acceder, para lo cual podemos regresar a la terminal.
   
-    ![Paso4.3](imagenes/Paso4.3.PNG)
+    ![Paso4.3](Imagenes/Paso4.3.PNG)
 
 5. Al regresar a la terminal solicita seleccionar un proyecto existente en nuestra cuenta de Google Cloud, el cual se debe seleccionar ingresando su respectivo numero.
    
-    ![Paso5](imagenes/Paso5.PNG)
+    ![Paso5](Imagenes/Paso5.PNG)
 
 6. Seleccionamos la opcion para configurar una region y zona por default para trabajar y presionar "Y".
 
@@ -110,7 +110,7 @@ La guia muestra como implementar Chaos Engineering en entornos Cloud Native de f
 
 14. Si todas las verificaciones son aprobadas se mostrara un status correcto al final.
 
-    ![Paso14](imagenes/Paso14.PNG)
+    ![Paso14](Imagenes/Paso14.PNG)
 15. Instalar el Control Plane dentro del clúster, esto genera la observabilidad para el mismo. Tener en cuenta que esta instalación puede tardar varios minutos. 
     
     ```
@@ -134,7 +134,7 @@ La guia muestra como implementar Chaos Engineering en entornos Cloud Native de f
     linkerd viz dashboard
     ```
 
-    ![Paso18](imagenes/Paso18.PNG)
+    ![Paso18](Imagenes/Paso18.PNG)
 
 
 ### Instalacion de Chaos mesh
@@ -151,7 +151,7 @@ La guia muestra como implementar Chaos Engineering en entornos Cloud Native de f
     kubectl get pod -n chaos-testing
     ```
 
-    ![Paso20](imagenes/Paso20.PNG)
+    ![Paso20](Imagenes/Paso20.PNG)
 
 21. Instalacion de dashboard web.
     
@@ -168,7 +168,7 @@ La guia muestra como implementar Chaos Engineering en entornos Cloud Native de f
 
     Esto abrira una ventana en el navegador con el dashboard de Chaos Mesh, en el cual se puede ver los experimentos activos, estadisticas sobre los mismos e informacion de experimentos ya ejecutados.
 
-    ![Paso22](imagenes/Paso22.PNG)
+    ![Paso22](Imagenes/Paso22.PNG)
 
 ### Clonacion de repositorio
 
